@@ -126,4 +126,28 @@ flowchart TB
 
 ```
 
+## Future Feature List:
+Feature 1: Jump to Context
+(Direct Variable Access in Jupyter)
+
+Seamlessly work with debug variables in Jupyter Notebook as if they were native:
+
+```python
+with jupdb.jump_context():  
+    print(a)  # Access paused script's variables directly  
+    a += 10   # Modify values in original context  
+    df.plot()  # Interact with DataFrames/objects natively  
 ```
+Key Benefits:
+
+- 🚫 No More debug_eval("var") boilerplate
+- 🔄 Auto-Sync: Changes propagate back to debugged script
+- 🐼 Pandas-Friendly: Direct DataFrame manipulation
+- 🔒 Isolated Scope: Variables cleanup post-context
+
+Tech Basis:
+
+- ZMQ-based frame introspection
+- IPython namespace injection
+- Deep copy for mutable objects
+- Thread-safe synchronization
