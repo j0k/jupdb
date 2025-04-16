@@ -27,11 +27,13 @@ Why It Mattered:
 - **Collaboration**: Share debug sessions with team members via notebooks
 - **Complex Workflows**: Handle ML training loops and ETL processes
 
-Jupdb is a take to solve this situation. By the way it developed with AI Deepseek recognition.
+Jupdb is a take to solve this situation. By the way it developed with AI Deepseek recognition and provides a robust foundation for interactive debugging in Jupyter while maintaining Python execution integrity.
+The key innovation was understanding and working with CPython's internal variable storage mechanism through PyFrame_LocalsToFast.
 
 ## Quick Start
 ```bash
-pip install git+https://github.com/yourusername/jupdb.git
+# python -m pip install --upgrade setuptools wheel twine check-wheel-contents pip
+pip install git+https://github.com/j0k/jupdb.git
 ```
 
 ```
@@ -126,14 +128,43 @@ flowchart TB
 
 ```
 
+Diagram for
+```python
+debug_eval("a")            # Returns {'result': '10'}
+debug_eval("a = 42")       # Returns {'result': 'executed'}
+debug_eval("a")            # Returns {'result': '42'}
+debug_continue()
+```
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant JuPDbClient
+    participant DebugServer
+    participant PythonProcess
+
+    User->>JuPDbClient: debug_eval("a = 42")
+    JuPDbClient->>DebugServer: ZMQ "eval" command
+    DebugServer->>PythonProcess: exec() in frame context
+    PythonProcess->>DebugServer: Update f_locals
+    DebugServer->>PythonProcess: PyFrame_LocalsToFast()
+    DebugServer->>JuPDbClient: Return "executed"
+    JuPDbClient->>User: Show result
+    User->>JuPDbClient: debug_continue()
+    JuPDbClient->>DebugServer: ZMQ "continue"
+    DebugServer->>PythonProcess: Resume execution
+    PythonProcess->>PythonProcess: Use updated a=42
+    PythonProcess->>Console: Print 62
+```
 ## Future Feature List:
-Feature 1: Jump to Context
+
+### Feature 1: Jump to Context
 (Direct Variable Access in Jupyter)
 
 Seamlessly work with debug variables in Jupyter Notebook as if they were native:
 
 ```python
-with jupdb.jump_context():  
+with jupdb.client.jump_context():  
     print(a)  # Access paused script's variables directly  
     a += 10   # Modify values in original context  
     df.plot()  # Interact with DataFrames/objects natively  
@@ -151,3 +182,70 @@ Tech Basis:
 - IPython namespace injection
 - Deep copy for mutable objects
 - Thread-safe synchronization
+
+### Feature 2: Cross-Implementation Support:
+
+```python
+# Add PyPy compatibility
+if 'PyPy' in sys.version:
+    self.debug_frame.locals_to_fast()
+else:
+    # CPython sync code
+```
+
+### Feature 3: Enhanced Debugging Features:
+
+- Breakpoint management
+- Stack inspection
+- Step-through execution
+- Watch expressions
+
+### Feature 4: Security:
+
+```python
+# Add ZMQ authentication
+self.socket.curve_secretkey = b"..."
+self.socket.curve_publickey = b"..."
+```
+
+### Feature 5: Error Handling:
+
+```python
+# Add timeout for ZMQ operations
+self.socket.setsockopt(zmq.RCVTIMEO, 5000)
+```
+
+### Feature 6: Multi-Thread Support:
+
+```python
+# Use thread-safe queues
+from queue import Queue
+command_queue = Queue()
+```
+
+### Feature 7: User Interface:
+```python
+# Jupyter widget integration
+from ipywidgets import interact
+@interact
+def debug_console(cmd=""):
+    return debug_eval(cmd)
+```
+
+### Feature 8: Performance Optimization:
+
+```python
+# Use binary serialization instead of JSON
+import pickle
+socket.send(pickle.dumps(response))
+```
+
+### Feature 9: Version Compatibility:
+
+```python
+# Handle Python version differences
+if sys.version_info >= (3, 11):
+    frame = inspect.currentframe().f_back.f_back
+else:
+    frame = inspect.currentframe().f_back
+```
