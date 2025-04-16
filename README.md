@@ -13,7 +13,7 @@ Debug Python scripts directly from Jupyter with real-time context inspection.
 
 ## History
 This project originated from a long-standing need I encountered while working with Python codes and Jupyter Notebooks. In February 2021, I asked on Stack Overflow:
-["IPython REPL Anywhere: How to share application context with IPython console for debugging?"](https://stackoverflow.com/questions/66121284/ipython-repl-anywhere-how-to-share-application-context-with-ipython-console-for)
+["IPython REPL Anywhere: How to share application context with IPython console for debugging?"](https://stackoverflow.com/questions/66121284/ipython-repl-anywhere-how-to-share-application-context-with-ipython-console-for).
 
 The Challenge:
 - Debugging long-running data processing scripts (especially pandas workflows)
@@ -28,7 +28,7 @@ Why It Mattered:
 - **Complex Workflows**: Handle ML training loops and ETL processes
 
 Jupdb is a take to solve this situation. By the way it developed with AI Deepseek recognition and provides a robust foundation for interactive debugging in Jupyter while maintaining Python execution integrity.
-The key innovation was understanding and working with CPython's internal variable storage mechanism through PyFrame_LocalsToFast.
+The key innovation was understanding and working with CPython's internal variable storage mechanism through PyFrame_LocalsToFast. Here are ideas [howto make it useable and visible](PROMOTION_IDEAS.md).
 
 ## Quick Start
 ```bash
