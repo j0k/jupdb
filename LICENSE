@@ -1,6 +1,6 @@
-MIT License
+MIT License with Attribution
 
-Copyright (c) 2025 j0k
+Copyright (c) 2025 Yuri Konoplev aka j0k
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -11,6 +11,12 @@ furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
+
+Additional Terms:
+  All uses must display attribution in either:
+  a) Software documentation
+  b) Interactive user interfaces
+  c) Public project repositories
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
