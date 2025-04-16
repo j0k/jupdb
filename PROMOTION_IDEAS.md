@@ -75,4 +75,62 @@ Call to Action
 
 **Deadline**: Typically 4-6 months before conference dates (Check JupyterCon 2026 CFP).
 
-Would you like me to draft the full proposal text?
+## Course "Master jupdb in 10 Days"
+(Daily actionable tips delivered to inbox)
+
+- Day 1: Install & First Breakpoint
+"Set `JuPDb().set_trace()` in your script"
+
+- Day 2: Variable Inspection Basics
+"Use `debug_eval('df.shape')` mid-ML training"
+
+- Day 3: Modifying Live Data
+"Fix pandas DataFrames without restarting: `debug_eval('df = df.dropna()')`"
+
+- Day 4: Context Magic
+"`with jupdb.jump_context(): df.plot()` - Direct notebook access"
+
+- Day 5: Debugging ML Models
+"Inspect PyTorch/TensorFlow tensors mid-epoch"
+
+- Day 6: Parallel Workflows
+"Debug Dask/Spark jobs across clusters"
+
+- Day 7: Custom Break Conditions
+"`set_trace(if=lambda: loss > 1.0)` - Smart pauses"
+
+- Day 8: Team Debugging
+"Share debug sessions via `JuPDb(share_url=True)`"
+
+## Course "Advanced Course: **jupdb Power User Tricks**"
+(Weekly deep-dives for 2 months)
+
+1. Trick 1: Time Travel Debugging
+"Rollback state with `debug_rewind(steps=3)`"
+
+2. Trick 2: Auto-Profiling
+"`debug_eval('%%jupdb_profile -o profile.html')` HTML reports"
+
+3. Trick 3: CI/CD Integration
+"Capture production errors in notebook format"
+
+4. Trick 4: GPU Memory Debugging
+"Track CUDA leaks without restarting training"
+
+5. Trick 5: JupyterLab Plugin
+"Visual variable explorer sidebar"
+
+### Lead Magnet Copy
+"Get free access to:
+- ✅ 10-Day jupdb Mastery Course (PDF + Code Samples)
+- ✅ Weekly Debugging Pro Tips (ML/Pandas Focus)
+- ✅ Exclusive jupdb Cheat Sheets
+
+I accept Privacy Policy & unsubscribe anytime"
+
+Content Differentiators
+- Pandas-Specific: "Debug chained `df.pipe().apply()` workflows"
+- ML Focused: "Fix model overfitting without re-training"
+- Big Data: "jupdb + Spark UI integration walkthrough"
+
+Want me to draft the first 3 emails? I can include code snippets and notebook examples! 🚀
