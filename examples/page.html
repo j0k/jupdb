@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jupdb Debug Flow</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #diagram {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .node-checkbox {
+            position: relative;
+            cursor: pointer;
+        }
+        .node-checkbox::before {
+            content: "☐";
+            position: absolute;
+            left: -20px;
+            top: 1px;
+        }
+        .node-checkbox.checked::before {
+            content: "☑";
+            color: #2196F3;
+        }
+        #debugOutput {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            min-height: 100px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <h1>jupdb Debug Flow Controller</h1>
+    <div id="diagramma">Hello</div>
+    <div id="diagram2">Hi</div>
+    <h3>Debug Log:</h3>
+    <div id="debugOutput">[System Ready] Click nodes to toggle components</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Initialize Mermaid
+                mermaid.initialize({
+                    startOnLoad: false,
+                    theme: 'default',
+                    flowchart: {
+                        useMaxWidth: true,
+                        htmlLabels: true
+                    }
+                });
+
+                // Define diagram
+                const diagramDefinition = `
+flowchart TB
+    subgraph Jupyter[Jupyter Environment]
+        UI[[" " Notebook]]:::node-checkbox -->|commands| Client[[" " ZMQ Client]]:::node-checkbox
+    end
+    subgraph App[Python Application]
+        Debugger[[" " jupdb]]:::node-checkbox -->|breakpoints| Server[[" " ZMQ Server]]:::node-checkbox
+    end
+    Client -->|tcp://localhost:5555| Server
+                `;
+
+                // Render diagram
+                const { svg } = await mermaid.render('diagram', diagramDefinition);
+                document.getElementById('diagramma').innerHTML = svg;
+
+                // Add interactivity
+                document.querySelectorAll('.node-checkbox').forEach(node => {
+                    node.addEventListener('click', function() {
+                        this.classList.toggle('checked');
+                        const nodeName = this.querySelector('text').textContent.trim();
+                        const status = this.classList.contains('checked') ? 'ENABLED' : 'DISABLED';
+                        const logEntry = `[${new Date().toLocaleTimeString()}] ${nodeName} ${status}\n`;
+                        document.getElementById('debugOutput').textContent += logEntry;
+                    });
+                });
+
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('debugOutput').textContent =
+                    `[ERROR] ${error.message}\nPlease refresh the page.`;
+            }
+        });
+    </script>
+</body>
+</html>
